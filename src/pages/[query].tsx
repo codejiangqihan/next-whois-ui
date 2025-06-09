@@ -27,8 +27,7 @@ import {
   RiRedditLine,
   RiWhatsappLine,
   RiTelegramLine,
-  RiArrowLeftLine,
-  RiArrowLeftSFill,
+  RiArrowLeftSLine,
 } from "@remixicon/react";
 import {
   Drawer,
@@ -52,7 +51,9 @@ import ErrorArea from "@/components/items/error-area";
 import RichTextarea from "@/components/items/rich-textarea";
 import InfoText from "@/components/items/info-text";
 import Clickable from "@/components/motion/clickable";
-import { SearchBox } from "@/components/search/SearchBox";
+import { SearchBox } from "@/components/search_box";
+import { useTranslation } from "@/lib/i18n";
+import { motion } from "framer-motion";
 
 type Props = {
   data: WhoisResult;
@@ -94,6 +95,7 @@ function getDnssecIcon(dnssec?: string) {
 }
 
 function ResultTable({ result, target }: ResultTableProps) {
+  const { t } = useTranslation();
   const Row = ({
     name,
     value,
@@ -192,21 +194,24 @@ function ResultTable({ result, target }: ResultTableProps) {
     result && (
       <table className={`w-full text-sm mb-4 whitespace-pre-wrap`}>
         <tbody>
-          <Row name={`Name`} value={result.domain || target.toUpperCase()} />
-          <Row name={`Status`} value={<StatusComp />} />
           <Row
-            name={`Registrar`}
+            name={t("whois_fields.name")}
+            value={result.domain || target.toUpperCase()}
+          />
+          <Row name={t("whois_fields.status")} value={<StatusComp />} />
+          <Row
+            name={t("whois_fields.registrar")}
             value={result.registrar}
             hidden={!result.registrar || result.registrar === "Unknown"}
           />
           <Row
-            name={`Registrar URL`}
+            name={t("whois_fields.registrar_url")}
             value={result.registrarURL}
             likeLink
             hidden={!result.registrarURL || result.registrarURL === "Unknown"}
           />
           <Row
-            name={`IANA ID`}
+            name={t("whois_fields.iana_id")}
             value={result.ianaId}
             hidden={!result.ianaId || result.ianaId === "N/A"}
           >
@@ -223,74 +228,74 @@ function ResultTable({ result, target }: ResultTableProps) {
 
           {/* IP Whois Only */}
           <Row
-            name={`CIDR`}
+            name={t("whois_fields.cidr")}
             value={result.cidr}
             hidden={!result.cidr || result.cidr === "Unknown"}
           />
           <Row
-            name={`Net Type`}
+            name={t("whois_fields.net_type")}
             value={result.netType}
             hidden={!result.netType || result.netType === "Unknown"}
           />
           <Row
-            name={`Net Name`}
+            name={t("whois_fields.net_name")}
             value={result.netName}
             hidden={!result.netName || result.netName === "Unknown"}
           />
           <Row
-            name={`INet Num`}
+            name={t("whois_fields.inet_num")}
             value={result.inetNum}
             hidden={!result.inetNum || result.inetNum === "Unknown"}
           />
           <Row
-            name={`INet6 Num`}
+            name={t("whois_fields.inet6_num")}
             value={result.inet6Num}
             hidden={!result.inet6Num || result.inet6Num === "Unknown"}
           />
           <Row
-            name={`Net Range`}
+            name={t("whois_fields.net_range")}
             value={result.netRange}
             hidden={!result.netRange || result.netRange === "Unknown"}
           />
           <Row
-            name={`Origin AS`}
+            name={t("whois_fields.origin_as")}
             value={result.originAS}
             hidden={!result.originAS || result.originAS === "Unknown"}
           />
           {/* IP Whois Only End */}
 
           <Row
-            name={`Whois Server`}
+            name={t("whois_fields.whois_server")}
             value={result.whoisServer}
             likeLink
             hidden={!result.whoisServer || result.whoisServer === "Unknown"}
           />
 
           <Row
-            name={`Creation Date`}
+            name={t("whois_fields.creation_date")}
             value={toReadableISODate(result.creationDate)}
             hidden={!result.creationDate || result.creationDate === "Unknown"}
           >
-            <InfoText content={`UTC`} />
+            <InfoText content={t("utc")} />
           </Row>
           <Row
-            name={`Updated Date`}
+            name={t("whois_fields.updated_date")}
             value={toReadableISODate(result.updatedDate)}
             hidden={!result.updatedDate || result.updatedDate === "Unknown"}
           >
-            <InfoText content={`UTC`} />
+            <InfoText content={t("utc")} />
           </Row>
           <Row
-            name={`Expiration Date`}
+            name={t("whois_fields.expiration_date")}
             value={toReadableISODate(result.expirationDate)}
             hidden={
               !result.expirationDate || result.expirationDate === "Unknown"
             }
           >
-            <InfoText content={`UTC`} />
+            <InfoText content={t("utc")} />
           </Row>
           <Row
-            name={`Registrant Organization`}
+            name={t("whois_fields.registrant_organization")}
             value={result.registrantOrganization}
             hidden={
               !result.registrantOrganization ||
@@ -298,7 +303,7 @@ function ResultTable({ result, target }: ResultTableProps) {
             }
           />
           <Row
-            name={`Registrant Province`}
+            name={t("whois_fields.registrant_province")}
             value={result.registrantProvince}
             hidden={
               !result.registrantProvince ||
@@ -306,7 +311,7 @@ function ResultTable({ result, target }: ResultTableProps) {
             }
           />
           <Row
-            name={`Registrant Country`}
+            name={t("whois_fields.registrant_country")}
             value={result.registrantCountry}
             hidden={
               !result.registrantCountry ||
@@ -314,23 +319,23 @@ function ResultTable({ result, target }: ResultTableProps) {
             }
           />
           <Row
-            name={`Registrant Phone`}
+            name={t("whois_fields.registrant_phone")}
             value={result.registrantPhone}
             hidden={
               !result.registrantPhone || result.registrantPhone === "Unknown"
             }
           >
-            <InfoText content={`Abuse`} />
+            <InfoText content={t("abuse")} />
           </Row>
           <Row
-            name={`Registrant Email`}
+            name={t("whois_fields.registrant_email")}
             value={result.registrantEmail}
             hidden={
               !result.registrantEmail || result.registrantEmail === "Unknown"
             }
           />
           <Row
-            name={`Name Servers`}
+            name={t("whois_fields.name_servers")}
             value={
               <div className={`flex flex-col`}>
                 {result.nameServers.map((ns, index) => (
@@ -347,7 +352,11 @@ function ResultTable({ result, target }: ResultTableProps) {
             }
             hidden={result.nameServers.length === 0}
           />
-          <Row name={`DNSSEC`} value={result.dnssec} hidden={!result.dnssec}>
+          <Row
+            name={t("whois_fields.dnssec")}
+            value={result.dnssec}
+            hidden={!result.dnssec}
+          >
             <Icon
               className={`inline w-3.5 h-3.5 ml-1.5`}
               icon={getDnssecIcon(result.dnssec)}
@@ -361,6 +370,7 @@ function ResultTable({ result, target }: ResultTableProps) {
 
 const ResultComp = React.forwardRef<HTMLDivElement, Props>(
   ({ data, target, isCapture }: Props, ref) => {
+    const { t } = useTranslation();
     const copy = useClipboard();
 
     const captureObject = React.useRef<HTMLDivElement>(null);
@@ -400,7 +410,7 @@ const ResultComp = React.forwardRef<HTMLDivElement, Props>(
                     className={`inline-flex items-center justify-center`}
                   >
                     <RiCameraLine className={`w-5 h-5 stroke-[1.5] mr-1.5`} />
-                    Capture
+                    {t("capture")}
                   </DrawerTitle>
                   <DrawerClose />
                 </DrawerHeader>
@@ -420,7 +430,7 @@ const ResultComp = React.forwardRef<HTMLDivElement, Props>(
                     tapEnabled
                   >
                     <RiCameraLine className={`w-4 h-4 mr-2`} />
-                    Capture
+                    {t("capture")}
                   </Button>
                 </DrawerFooter>
               </DrawerContent>
@@ -442,13 +452,13 @@ const ResultComp = React.forwardRef<HTMLDivElement, Props>(
                     className={`inline-flex items-center justify-center`}
                   >
                     <RiShareLine className={`w-4 h-4 stroke-[1.5] mr-1.5`} />
-                    Share
+                    {t("share")}
                   </DrawerTitle>
                   <DrawerClose />
                 </DrawerHeader>
                 <DrawerDescription>
                   <p className={`text-sm text-secondary`}>
-                    Share the result with others
+                    {t("share_description")}
                   </p>
                 </DrawerDescription>
 
@@ -586,7 +596,7 @@ const ResultComp = React.forwardRef<HTMLDivElement, Props>(
                   {!isCapture && (
                     <RichTextarea
                       className={`mt-2`}
-                      name={`Raw Whois Response`}
+                      name={t("raw_whois_response")}
                       value={result?.rawWhoisContent}
                       saveFileName={`${target.replace(/\./g, "-")}-whois.txt`}
                     />
@@ -602,6 +612,7 @@ const ResultComp = React.forwardRef<HTMLDivElement, Props>(
 );
 
 export default function Lookup({ data, target }: Props) {
+  const { t } = useTranslation();
   const [loading, setLoading] = React.useState<boolean>(false);
 
   const handleSearch = (query: string) => {
@@ -622,29 +633,50 @@ export default function Lookup({ data, target }: Props) {
           "relative w-full min-h-full grid place-items-center px-4 pb-6"
         }
       >
-        <div
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           className={
             "flex flex-col items-center w-full h-fit max-w-[568px] m-2 mt-4"
           }
         >
-          <div className="w-full flex items-center justify-start">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
+            className="w-full flex items-center justify-start"
+          >
             <Link href="/">
               <button className="flex items-center text-secondary hover:text-primary transition-colors text-xs duration-300">
-                <RiArrowLeftSFill className="w-4 h-4 mr-1" />
-                Back
+                <RiArrowLeftSLine className="w-4 h-4 mr-1" />
+                {t("back")}
               </button>
             </Link>
-          </div>
+          </motion.div>
 
-          <div className={"w-full mt-1.5"}>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
+            className={"w-full mt-1.5"}
+          >
             <SearchBox
               initialValue={target}
               onSearch={handleSearch}
               loading={loading}
             />
-          </div>
-          <ResultComp data={data} target={target} />
-        </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+            className="w-full"
+          >
+            <ResultComp data={data} target={target} />
+          </motion.div>
+        </motion.div>
       </main>
     </ScrollArea>
   );

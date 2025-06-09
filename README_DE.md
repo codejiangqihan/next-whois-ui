@@ -1,10 +1,10 @@
 <div align="center">
 
-# 🧪 Next Whois UI
+# 🧪 Next Whois
 
 😎 Modernes Whois-Abfrage-Tool
 
-[English](README.md) · [简体中文](README_CN.md) · [繁體中文](README_TW.md) · [Русский](README_RU.md) · [日本語](README_JP.md) · [Deutsch](README_DE.md)
+[English](README.md) · [简体中文](README_CN.md) · [繁體中文](README_TW.md) · [Русский](README_RU.md) · [日本語](README_JP.md) · [Deutsch](README_DE.md) · [Français](README_FR.md) · [한국어](README_KR.md)
 
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/zmh-program/next-whois-ui)
 
@@ -24,10 +24,10 @@ Keine Notwendigkeit, mehr zu sagen, probieren Sie es einfach aus! 🥳
 6. 📡 **Offene API**: Einfache API für Whois-Abfragen, leicht in andere Dienste zu integrieren.
 7. 🌍 **IPv4 & IPv6 Whois**: Unterstützung für Whois-Abfragen für IPv4, IPv6, Domain, ASN, CIDR.
 8. 📦 **Ergebnis erfassen**: Erfassen von Whois-Ergebnissen, einfach zu teilen und zu speichern.
-9. 📡 **Whois-Cache**: Unterstützung für Whois-Cache basierend auf Redis, Verbesserung der Abfragegeschwindigkeit.
-10. 🌍 [In Arbeit] **Internationalisierung**: Unterstützung für mehrere Sprachen. ([#6](https://github.com/zmh-program/next-whois-ui/issues/6))
+9. 📡 **Ergebnis-Caching**: Redis-basiertes Whois-Caching für schnellere Abfragen.
+10. 🌍 **Internationalisierung**: Unterstützung mehrerer Sprachen
 
-👉 [Pull Request erstellen](https://github.com/zmh-program/next-whois-ui/pulls)
+👉 [Beitragen](https://github.com/zmh-program/next-whois-ui/pulls)
 
 ## Bereitstellung
 
@@ -62,7 +62,7 @@ pnpm dev
 
 ### WHOIS
 
-- `NEXT_PUBLIC_HISTORY_LIMIT`: Verlaufslimit (Standard: 6)
+- `NEXT_PUBLIC_HISTORY_LIMIT`: Verlaufslimit (Standard: -1)
 - `NEXT_PUBLIC_MAX_WHOIS_FOLLOW`: Maximale Domain-Whois-Verfolgung (Standard: 0)
 - `NEXT_PUBLIC_MAX_IP_WHOIS_FOLLOW`: Maximale IP-Whois-Verfolgung (Standard: 5)
 

@@ -1,10 +1,10 @@
 <div align="center">
 
-# 🧪 Next Whois UI
+# 🧪 Next Whois
 
-😎 現代的な Whois クエリツール
+😎 軽量で美しい Whois クエリツール
 
-[English](README.md) · [简体中文](README_CN.md) · [繁體中文](README_TW.md) · [Русский](README_RU.md) · [日本語](README_JP.md) · [Deutsch](README_DE.md)
+[English](README.md) · [简体中文](README_CN.md) · [繁體中文](README_TW.md) · [Русский](README_RU.md) · [日本語](README_JP.md) · [Deutsch](README_DE.md) · [Français](README_FR.md) · [한국어](README_KR.md)
 
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/zmh-program/next-whois-ui)
 
@@ -24,10 +24,10 @@
 6. 📡 **オープンAPI**: シンプルなWhoisクエリAPIで、他のサービスとの統合が容易です。
 7. 🌍 **IPv4＆IPv6 Whois**: IPv4、IPv6、ドメイン、ASN、CIDRのWhoisクエリをサポート。
 8. 📦 **結果キャプチャ**: Whois結果をキャプチャし、共有や保存が簡単です。
-9. 📡 **Whoisキャッシュ**: RedisベースのWhoisキャッシュをサポートし、クエリ速度を向上させます。
-10. 🌍 [進行中] **国際化**: 複数の言語をサポート。 ([#6](https://github.com/zmh-program/next-whois-ui/issues/6))
+9. 📡 **結果キャッシュ**：Redisベースのキャッシュで高速なクエリを実現。
+10. 🌍 **国際化**：多言語対応
 
-👉 [プルリクエストを作成](https://github.com/zmh-program/next-whois-ui/pulls)
+👉 [コントリビュート](https://github.com/zmh-program/next-whois-ui/pulls)
 
 ## デプロイ
 
@@ -62,7 +62,7 @@ pnpm dev
 
 ### WHOIS
 
-- `NEXT_PUBLIC_HISTORY_LIMIT`: 履歴制限（デフォルト値：6）
+- `NEXT_PUBLIC_HISTORY_LIMIT`: 履歴制限（デフォルト値：-1）
 - `NEXT_PUBLIC_MAX_WHOIS_FOLLOW`: 最大ドメインWhoisフォロー数（デフォルト値：0）
 - `NEXT_PUBLIC_MAX_IP_WHOIS_FOLLOW`: 最大IP Whoisフォロー数（デフォルト値：5）
 

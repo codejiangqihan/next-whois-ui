@@ -9,6 +9,8 @@ import { VERSION } from "@/lib/env";
 import Link from "next/link";
 import { RiGithubFill } from "@remixicon/react";
 import { useScrollDirection } from "@/hooks/useScrollDirection";
+import { usePWAInstaller } from "./pwa_installer";
+import { LanguageSwitcher } from "./language-switcher";
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
@@ -62,6 +64,7 @@ export function ThemeToggle() {
 
 export function Navbar() {
   const isVisible = useScrollDirection();
+  const { install } = usePWAInstaller();
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50 flex justify-center">
@@ -78,6 +81,7 @@ export function Navbar() {
         <Link
           href="/"
           className="text-xs ml-2 font-medium tracking-wide hover:text-primary/80 transition-colors flex items-center"
+          onClick={() => install(true)}
         >
           NEXT WHOIS
           <p className="text-xs text-muted-foreground ml-1.5">{VERSION}</p>
@@ -87,12 +91,13 @@ export function Navbar() {
 
         <div className="flex items-center gap-3">
           <ThemeToggle />
+          <LanguageSwitcher />
           <Link
             href="https://github.com/zmh-program/next-whois-ui"
             target="_blank"
-            className="inline-flex items-center justify-center rounded-full w-8 h-8 hover:scale-110 transition-all duration-300"
+            className="inline-flex items-center justify-center rounded-full p-2 hover:scale-110 transition-all duration-300"
           >
-            <RiGithubFill className="h-4 w-4" />
+            <RiGithubFill className="h-[1rem] w-[1rem]" />
             <span className="sr-only">GitHub</span>
           </Link>
         </div>

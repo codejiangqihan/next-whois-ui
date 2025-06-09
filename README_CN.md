@@ -1,10 +1,10 @@
 <div align="center">
 
-# 🧪 Next Whois UI
+# 🧪 Next Whois
 
-😎 现代的 Whois 查询工具
+😎 轻量级且美观的 Whois 查询工具
 
-[English](README.md) · [简体中文](README_CN.md) · [繁體中文](README_TW.md) · [Русский](README_RU.md) · [日本語](README_JP.md) · [Deutsch](README_DE.md)
+[English](README.md) · [简体中文](README_CN.md) · [繁體中文](README_TW.md) · [Русский](README_RU.md) · [日本語](README_JP.md) · [Deutsch](README_DE.md) · [Français](README_FR.md) · [한국어](README_KR.md)
 
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/zmh-program/next-whois-ui)
 
@@ -25,7 +25,7 @@
 7. 🌍 **强大支持**：支持 IPv4、IPv6、域名、ASN、CIDR 的 Whois 查询。
 8. 📦 **结果分享**：支持获取 Whois 查询结果，方便分享和保存。
 9. 📡 **结果缓存**：支持基于 Redis 的 Whois 缓存，提升查询速度。
-10. 🌍 [计划] **国际化**：支持多语言 ([#6](https://github.com/zmh-program/next-whois-ui/issues/6))
+10. 🌍 **国际化**：支持多语言
 
 👉 [贡献代码](https://github.com/zmh-program/next-whois-ui/pulls)
 
@@ -62,7 +62,7 @@ pnpm dev
 
 ### WHOIS
 
-- `NEXT_PUBLIC_HISTORY_LIMIT`: 历史记录限制（默认值：6）
+- `NEXT_PUBLIC_HISTORY_LIMIT`: 历史记录限制（默认值：-1）
 - `NEXT_PUBLIC_MAX_WHOIS_FOLLOW`: 最大域名 Whois 跟随数（默认值：0）
 - `NEXT_PUBLIC_MAX_IP_WHOIS_FOLLOW`: 最大 IP Whois 跟随数（默认值：5）
 

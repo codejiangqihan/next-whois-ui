@@ -12,6 +12,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cn, isEnter } from "@/lib/utils";
 import { listHistory, HistoryItem } from "@/lib/history";
 import { Badge } from "@/components/ui/badge";
+import { useTranslation } from "@/lib/i18n";
 
 const commonDomains = [
   // Generic TLDs
@@ -63,10 +64,11 @@ interface SearchBoxProps {
   onSearch: (value: string) => void;
   loading?: boolean;
   className?: string;
+  autoFocus?: boolean;
 }
 
 interface SuggestionGroup {
-  title: string;
+  type: "history" | "quick";
   items: string[];
 }
 
@@ -75,7 +77,9 @@ export function SearchBox({
   onSearch,
   loading = false,
   className,
+  autoFocus = false,
 }: SearchBoxProps) {
+  const { t } = useTranslation();
   const [inputValue, setInputValue] = useState(initialValue);
   const [suggestions, setSuggestions] = useState<SuggestionGroup[]>([]);
   const [history, setHistory] = useState<HistoryItem[]>([]);
@@ -105,6 +109,12 @@ export function SearchBox({
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    if (autoFocus && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [autoFocus]);
 
   const predictQueryType = (value: string): string => {
     if (!value) return "domain";
@@ -207,7 +217,7 @@ export function SearchBox({
 
     if (historySuggestions.length > 0) {
       suggestionGroups.push({
-        title: "Recent Searches",
+        type: "history",
         items: historySuggestions.slice(0, 5),
       });
     }
@@ -249,7 +259,7 @@ export function SearchBox({
     }
 
     suggestionGroups.push({
-      title: "Quick Suggestions",
+      type: "quick",
       items: typeSuggestions.length > 0 ? typeSuggestions.slice(0, 8) : [value],
     });
 
@@ -306,7 +316,7 @@ export function SearchBox({
 
       setSelectedIndex(currentIndex);
       setSelectedGroup(currentGroup);
-    } else if (e.key === "Enter") {
+    } else if (isEnter(e)) {
       setIsEnterPressed(true);
       setTimeout(() => setIsEnterPressed(false), 200);
       if (
@@ -341,8 +351,8 @@ export function SearchBox({
       <div className="relative flex flex-row items-center w-full">
         <Input
           ref={inputRef}
-          className="w-full text-center pr-20 transition-all duration-300 hover:shadow focus-visible:ring-primary/20 focus-visible:ring-offset-0"
-          placeholder="Search Domain, IPv4, IPv6, ASN, or CIDR"
+          className="w-full text-center pr-12 transition-all duration-300 hover:shadow focus-visible:ring-primary/20 focus-visible:ring-offset-0"
+          placeholder={t("search_placeholder")}
           value={inputValue}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
@@ -377,10 +387,10 @@ export function SearchBox({
             className="absolute z-50 w-full mt-1 bg-background/95 backdrop-blur-sm rounded-lg border shadow-lg overflow-hidden divide-y divide-border/50"
           >
             {suggestions.map((group, groupIndex) => (
-              <div key={group.title} className="relative">
+              <div key={group.type} className="relative">
                 <div>
                   {group.items.map((suggestion, index) => {
-                    const isHistory = group.title === "Recent Searches";
+                    const isHistory = group.type === "history";
                     const type = predictQueryType(suggestion);
 
                     return (
@@ -411,11 +421,11 @@ export function SearchBox({
                         <Badge
                           variant="outline"
                           className={cn(
-                            "ml-2 text-[10px] px-1.5 py-0 font-normal border-dashed",
+                            "ml-2 text-[10px] px-1.5 py-0 font-normal border-dashed rounded-sm",
                             isHistory
                               ? "opacity-60 bg-muted/20"
                               : "opacity-40 group-hover:opacity-60",
-                            "transition-opacity duration-150",
+                            "transition-opacity duration-150 bg-primary/20",
                           )}
                         >
                           {type.toUpperCase()}

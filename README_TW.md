@@ -1,10 +1,10 @@
 <div align="center">
 
-# 🧪 Next Whois UI
+# 🧪 Next Whois
 
-😎 現代代 Whois 查詢工具
+😎 輕量級且美觀的 Whois 查詢工具
 
-[English](README.md) · [簡體中文](README_CN.md) · [繁體中文](README_TW.md) · [Русский](README_RU.md) · [日本語](README_JP.md) · [Deutsch](README_DE.md)
+[English](README.md) · [簡體中文](README_CN.md) · [繁體中文](README_TW.md) · [Русский](README_RU.md) · [日本語](README_JP.md) · [Deutsch](README_DE.md) · [Français](README_FR.md) · [한국어](README_KR.md)
 
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/zmh-program/next-whois-ui)
 
@@ -24,8 +24,8 @@
 6. 📡 **開放接口**：提供簡單的 whois 查詢 API，易於與其他服務集成。
 7. 🌍 **強大支持**：支持 IPv4、IPv6、域名、ASN、CIDR 的 Whois 查詢。
 8. 📦 **結果分享**：支持獲取 Whois 查詢結果，方便分享和保存。
-9. 📡 **結果緩存**：支持基於 Redis 的 Whois 緩存，提昇查詢速度。
-10. 🌍 [計劃] **國際化**：支持多語言 ([#6](https://github.com/zmh-program/next-whois-ui/issues/6))
+9. 📡 **結果快取**：支援基於 Redis 的 Whois 快取，提升查詢速度。
+10. 🌍 **國際化**：支援多語言
 
 👉 [貢獻代碼](https://github.com/zmh-program/next-whois-ui/pulls)
 
@@ -62,7 +62,7 @@ pnpm dev
 
 ### WHOIS
 
-- `NEXT_PUBLIC_HISTORY_LIMIT`: 曆史記錄限製（默認值：6）
+- `NEXT_PUBLIC_HISTORY_LIMIT`: 曆史記錄限製（默認值：-1）
 - `NEXT_PUBLIC_MAX_WHOIS_FOLLOW`: 最大域名 Whois 跟隨數（默認值：0）
 - `NEXT_PUBLIC_MAX_IP_WHOIS_FOLLOW`: 最大 IP Whois 跟隨數（默認值：5）
 
