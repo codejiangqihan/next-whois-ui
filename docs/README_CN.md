@@ -4,7 +4,7 @@
 
 😎 轻量级且美观的 Whois 查询工具
 
-[English](README.md) · [简体中文](README_CN.md) · [繁體中文](README_TW.md) · [Русский](README_RU.md) · [日本語](README_JP.md) · [Deutsch](README_DE.md) · [Français](README_FR.md) · [한국어](README_KR.md)
+[English](/README.md) · [简体中文](/docs/README_CN.md) · [繁體中文](/docs/README_TW.md) · [Русский](/docs/README_RU.md) · [日本語](/docs/README_JP.md) · [Deutsch](/docs/README_DE.md) · [Français](/docs/README_FR.md) · [한국어](/docs/README_KR.md)
 
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/zmh-program/next-whois-ui)
 
@@ -26,6 +26,7 @@
 8. 📦 **结果分享**：支持获取 Whois 查询结果，方便分享和保存。
 9. 📡 **结果缓存**：支持基于 Redis 的 Whois 缓存，提升查询速度。
 10. 🌍 **国际化**：支持多语言
+11. 🚀 **RDAP 支持**：支持现代 RDAP 协议，自动回退到 WHOIS
 
 👉 [贡献代码](https://github.com/zmh-program/next-whois-ui/pulls)
 
@@ -66,6 +67,11 @@ pnpm dev
 - `NEXT_PUBLIC_MAX_WHOIS_FOLLOW`: 最大域名 Whois 跟随数（默认值：0）
 - `NEXT_PUBLIC_MAX_IP_WHOIS_FOLLOW`: 最大 IP Whois 跟随数（默认值：5）
 
+### MOZ API
+
+- `MOZ_ACCESS_ID`: Moz API 访问 ID（获取域名指标所需）
+- `MOZ_SECRET_KEY`: Moz API 密钥（获取域名指标所需）
+
 ### 缓存
 
 - `REDIS_HOST`: Redis 主机（如果为空则禁用缓存）
@@ -86,6 +92,7 @@ pnpm dev
   "time": 1.547,
   "status": true,
   "cached": false,
+  "source": "rdap",
   "result": {
     "domain": "GOOGLE.COM",
     "registrar": "MarkMonitor Inc.",
@@ -132,7 +139,8 @@ pnpm dev
     "registrantCountry": "Unknown",
     "registrantPhone": "+1 2086851750",
     "registrantEmail": "Unknown",
-    "rawWhoisContent": "..."
+    "rawWhoisContent": "...",
+    "rawRdapContent": "..."
   }
 }
 ```
@@ -170,6 +178,7 @@ pnpm dev
 - Next.js
 - Shadcn UI & Tailwind CSS
 - Whois Core Lib (@[whois-raw](https://www.npmjs.com/package/whois-raw))
+- RDAP 支持 (@[node-rdap](https://www.npmjs.com/package/node-rdap))
 
 ## 💪 TLDs 支持
 

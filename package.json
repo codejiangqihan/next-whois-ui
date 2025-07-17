@@ -38,6 +38,7 @@
     "next-i18next": "^15.3.1",
     "next-pwa": "^5.6.0",
     "next-themes": "^0.3.0",
+    "node-rdap": "^0.5.0",
     "prettier": "^3.3.3",
     "react": "^18",
     "react-dom": "^18",
@@ -50,7 +51,7 @@
     "whois-raw": "^0.1.10"
   },
   "devDependencies": {
-    "@types/node": "^20",
+    "@types/node": "^20.19.8",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/tldjs": "^2.3.4",

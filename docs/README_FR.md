@@ -3,7 +3,7 @@
 # 🧪 Next Whois
 😎 Outil de requête Whois léger et élégant
 
-[English](README.md) · [简体中文](README_CN.md) · [繁體中文](README_TW.md) · [Русский](README_RU.md) · [日本語](README_JP.md) · [Deutsch](README_DE.md) · [Français](README_FR.md) · [한국어](README_KR.md)
+[English](/README.md) · [简体中文](/docs/README_CN.md) · [繁體中文](/docs/README_TW.md) · [Русский](/docs/README_RU.md) · [日本語](/docs/README_JP.md) · [Deutsch](/docs/README_DE.md) · [Français](/docs/README_FR.md) · [한국어](/docs/README_KR.md)
 
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/zmh-program/next-whois-ui)
 
@@ -24,6 +24,7 @@ Pas besoin d'en dire plus, essayez-le ! 🥳
 8. 📦 **Capture des résultats**: Capturez les résultats whois, faciles à partager.
 9. 📡 **Mise en cache**: Mise en cache Whois basée sur Redis pour des requêtes plus rapides.
 10. 🌍 **Internationalisation**: Support multi-langues
+11. 🚀 **Support RDAP**: Support du protocole RDAP moderne avec repli automatique vers WHOIS
 
 👉 [Contribuer](https://github.com/zmh-program/next-whois-ui/pulls)
 
@@ -57,6 +58,10 @@ pnpm dev
 - `NEXT_PUBLIC_MAX_WHOIS_FOLLOW`: Suivi max des domaines Whois (Par défaut: 0)
 - `NEXT_PUBLIC_MAX_IP_WHOIS_FOLLOW`: Suivi max des IP Whois (Par défaut: 5)
 
+### MOZ API
+- `MOZ_ACCESS_ID`: ID d'accès Moz API (Requis pour les métriques de domaine)
+- `MOZ_SECRET_KEY`: Clé secrète Moz API (Requise pour les métriques de domaine)
+
 ### CACHE
 - `REDIS_HOST`: Hôte Redis (CACHE DÉSACTIVÉ SI VIDE)
 - `REDIS_PORT`: Port Redis (Par défaut: 6379)
@@ -68,6 +73,7 @@ pnpm dev
 - Next.js
 - Shadcn UI & Tailwind CSS
 - Whois Core Lib (@[whois-raw](https://www.npmjs.com/package/whois-raw))
+- Support RDAP (@[node-rdap](https://www.npmjs.com/package/node-rdap))
 
 ## 💪 Support TLD
 👉 [Code source de la bibliothèque d'analyse Whois TLD](./src/lib/whois/lib.ts)

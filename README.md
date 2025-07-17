@@ -3,7 +3,7 @@
 # 🧪 Next Whois
 😎 Lightweight & Beautiful Whois Query Tool
 
-[English](README.md) · [简体中文](README_CN.md) · [繁體中文](README_TW.md) · [Русский](README_RU.md) · [日本語](README_JP.md) · [Deutsch](README_DE.md) · [Français](README_FR.md) · [한국어](README_KR.md)
+[English](/README.md) · [简体中文](/docs/README_CN.md) · [繁體中文](/docs/README_TW.md) · [Русский](/docs/README_RU.md) · [日本語](/docs/README_JP.md) · [Deutsch](/docs/README_DE.md) · [Français](/docs/README_FR.md) · [한국어](/docs/README_KR.md)
 
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/zmh-program/next-whois-ui)
 
@@ -24,6 +24,7 @@ No need to say more, just try it out! 🥳
 8. 📦 **Result Capture**: Capture whois result, easy to share and save.
 9. 📡 **Result Caching**: Redis-based Whois caching for faster queries.
 10. 🌍 **Internationalization**: Multi-language support
+11. 🚀 **RDAP Support**: Modern RDAP protocol support with automatic fallback to WHOIS
 
 👉 [Contribute](https://github.com/zmh-program/next-whois-ui/pulls)
 
@@ -57,6 +58,10 @@ pnpm dev
 - `NEXT_PUBLIC_MAX_WHOIS_FOLLOW`: Max Domain Whois Follow (Default: 0)
 - `NEXT_PUBLIC_MAX_IP_WHOIS_FOLLOW`: Max IP Whois Follow (Default: 5)
 
+### MOZ API
+- `MOZ_ACCESS_ID`: Moz API Access ID (Required for domain metrics)
+- `MOZ_SECRET_KEY`: Moz API Secret Key (Required for domain metrics)
+
 ### CACHE
 - `REDIS_HOST`: Redis Host (CACHE DISABLED WHEN EMPTY)
 - `REDIS_PORT`: Redis Port (Default: 6379)
@@ -75,6 +80,7 @@ pnpm dev
   "time": 1.547,
   "status": true,
   "cached": false,
+  "source": "rdap",
   "result": {
     "domain": "GOOGLE.COM",
     "registrar": "MarkMonitor Inc.",
@@ -121,7 +127,8 @@ pnpm dev
     "registrantCountry": "Unknown",
     "registrantPhone": "+1 2086851750",
     "registrantEmail": "Unknown",
-    "rawWhoisContent": "..."
+    "rawWhoisContent": "...",
+    "rawRdapContent": "..."
   }
 }
 ```
@@ -155,6 +162,7 @@ pnpm dev
 - Next.js
 - Shadcn UI & Tailwind CSS
 - Whois Core Lib (@[whois-raw](https://www.npmjs.com/package/whois-raw))
+- RDAP Support (@[node-rdap](https://www.npmjs.com/package/node-rdap))
 
 ## 💪 TLDs Support
 👉 [TLDs Whois Parser Lib Source Code](./src/lib/whois/lib.ts)

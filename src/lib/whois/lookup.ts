@@ -1,21 +1,19 @@
-import { MAX_IP_WHOIS_FOLLOW, MAX_WHOIS_FOLLOW } from "@/lib/env";
-import whois from "whois-raw";
+import { MAX_WHOIS_FOLLOW } from "@/lib/env";
 import { WhoisResult } from "@/lib/whois/types";
-import { parseWhoisData } from "@/lib/whois/tld_parser";
-import { countDuration, extractDomain, toErrorMessage } from "@/lib/utils";
 import { getJsonRedisValue, setJsonRedisValue } from "@/lib/server/redis";
+import { analyzeWhois } from "@/lib/whois/common_parser";
+import { extractDomain } from "@/lib/utils";
+import { lookupRdap, convertRdapToWhoisResult } from "@/lib/whois/rdap_client";
+import whois from "whois-raw";
 
-export function getLookupOptions(domain: string) {
+function getLookupOptions(domain: string) {
   const isDomain = !!extractDomain(domain);
   return {
-    follow: isDomain ? MAX_WHOIS_FOLLOW : MAX_IP_WHOIS_FOLLOW,
+    follow: isDomain ? MAX_WHOIS_FOLLOW : 0,
   };
 }
 
-export function getLookupRawWhois(
-  domain: string,
-  options?: any,
-): Promise<string> {
+function getLookupRawWhois(domain: string, options?: any): Promise<string> {
   return new Promise((resolve, reject) => {
     try {
       whois.lookup(domain, options, (err: Error, data: string) => {
@@ -31,27 +29,6 @@ export function getLookupRawWhois(
       reject(e);
     }
   });
-}
-export async function lookupWhois(domain: string): Promise<WhoisResult> {
-  const startTime = Date.now();
-
-  try {
-    const data = await getLookupRawWhois(domain, getLookupOptions(domain));
-    const endTime = Date.now();
-    const parsed = parseWhoisData(data, domain);
-
-    return {
-      status: true,
-      time: countDuration(startTime, endTime),
-      result: parsed,
-    };
-  } catch (e) {
-    return {
-      status: false,
-      time: countDuration(startTime),
-      error: toErrorMessage(e),
-    };
-  }
 }
 
 export async function lookupWhoisWithCache(
@@ -76,4 +53,51 @@ export async function lookupWhoisWithCache(
     ...result,
     cached: false,
   };
+}
+
+export async function lookupWhois(domain: string): Promise<WhoisResult> {
+  const startTime = performance.now();
+
+  try {
+    const rdapData = await lookupRdap(domain);
+    const result = await convertRdapToWhoisResult(rdapData, domain);
+
+    return {
+      time: (performance.now() - startTime) / 1000,
+      status: true,
+      cached: false,
+      source: "rdap",
+      result,
+    };
+  } catch (rdapError: unknown) {
+    console.log("RDAP lookup failed, fallback to WHOIS:", rdapError);
+
+    try {
+      const whoisData = await getLookupRawWhois(
+        domain,
+        getLookupOptions(domain),
+      );
+      const result = await analyzeWhois(whoisData);
+
+      return {
+        time: (performance.now() - startTime) / 1000,
+        status: true,
+        cached: false,
+        source: "whois",
+        result,
+      };
+    } catch (whoisError: unknown) {
+      const errorMessage =
+        whoisError instanceof Error
+          ? whoisError.message
+          : "Unknown error occurred";
+      return {
+        time: (performance.now() - startTime) / 1000,
+        status: false,
+        cached: false,
+        source: "whois",
+        error: errorMessage,
+      };
+    }
+  }
 }

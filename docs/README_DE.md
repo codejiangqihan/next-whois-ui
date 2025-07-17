@@ -4,7 +4,7 @@
 
 😎 Modernes Whois-Abfrage-Tool
 
-[English](README.md) · [简体中文](README_CN.md) · [繁體中文](README_TW.md) · [Русский](README_RU.md) · [日本語](README_JP.md) · [Deutsch](README_DE.md) · [Français](README_FR.md) · [한국어](README_KR.md)
+[English](/README.md) · [简体中文](/docs/README_CN.md) · [繁體中文](/docs/README_TW.md) · [Русский](/docs/README_RU.md) · [日本語](/docs/README_JP.md) · [Deutsch](/docs/README_DE.md) · [Français](/docs/README_FR.md) · [한국어](/docs/README_KR.md)
 
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/zmh-program/next-whois-ui)
 
@@ -26,6 +26,7 @@ Keine Notwendigkeit, mehr zu sagen, probieren Sie es einfach aus! 🥳
 8. 📦 **Ergebnis erfassen**: Erfassen von Whois-Ergebnissen, einfach zu teilen und zu speichern.
 9. 📡 **Ergebnis-Caching**: Redis-basiertes Whois-Caching für schnellere Abfragen.
 10. 🌍 **Internationalisierung**: Unterstützung mehrerer Sprachen
+11. 🚀 **RDAP-Unterstützung**: Unterstützung des modernen RDAP-Protokolls mit automatischem Fallback auf WHOIS
 
 👉 [Beitragen](https://github.com/zmh-program/next-whois-ui/pulls)
 
@@ -66,6 +67,10 @@ pnpm dev
 - `NEXT_PUBLIC_MAX_WHOIS_FOLLOW`: Maximale Domain-Whois-Verfolgung (Standard: 0)
 - `NEXT_PUBLIC_MAX_IP_WHOIS_FOLLOW`: Maximale IP-Whois-Verfolgung (Standard: 5)
 
+### MOZ API
+- `MOZ_ACCESS_ID`: Moz API Zugangs-ID (Erforderlich für Domain-Metriken)
+- `MOZ_SECRET_KEY`: Moz API Geheimschlüssel (Erforderlich für Domain-Metriken)
+
 ### CACHE
 
 - `REDIS_HOST`: Redis-Host (CACHE DEAKTIVIERT, WENN LEER)
@@ -86,6 +91,7 @@ pnpm dev
   "time": 1.547,
   "status": true,
   "cached": false,
+  "source": "rdap",
   "result": {
     "domain": "GOOGLE.COM",
     "registrar": "MarkMonitor Inc.",
@@ -132,7 +138,8 @@ pnpm dev
     "registrantCountry": "Unknown",
     "registrantPhone": "+1 2086851750",
     "registrantEmail": "Unknown",
-    "rawWhoisContent": "..."
+    "rawWhoisContent": "...",
+    "rawRdapContent": "..."
   }
 }
 ```
@@ -170,6 +177,7 @@ pnpm dev
 - Next.js
 - Shadcn UI & Tailwind CSS
 - Whois Core Lib (@[whois-raw](https://www.npmjs.com/package/whois-raw))
+- RDAP-Unterstützung (@[node-rdap](https://www.npmjs.com/package/node-rdap))
 
 ## 💪 TLDs-Unterstützung
 

@@ -3,7 +3,7 @@
 # 🧪 Next Whois
 😎 가볍고 아름다운 Whois 조회 도구
 
-[English](README.md) · [简体中文](README_CN.md) · [繁體中文](README_TW.md) · [Русский](README_RU.md) · [日本語](README_JP.md) · [Deutsch](README_DE.md) · [Français](README_FR.md) · [한국어](README_KR.md)
+[English](/README.md) · [简体中文](/docs/README_CN.md) · [繁體中文](/docs/README_TW.md) · [Русский](/docs/README_RU.md) · [日本語](/docs/README_JP.md) · [Deutsch](/docs/README_DE.md) · [Français](/docs/README_FR.md) · [한국어](/docs/README_KR.md)
 
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/zmh-program/next-whois-ui)
 
@@ -24,6 +24,7 @@
 8. 📦 **결과 캡처**: whois 결과를 캡처하여 쉽게 공유하고 저장
 9. 📡 **결과 캐싱**: Redis 기반 Whois 캐싱으로 더 빠른 쿼리
 10. 🌍 **국제화**: 다국어 지원
+11. 🚀 **RDAP 지원**: 현대적인 RDAP 프로토콜 지원과 WHOIS로의 자동 대체
 
 👉 [기여하기](https://github.com/zmh-program/next-whois-ui/pulls)
 
@@ -57,6 +58,10 @@ pnpm dev
 - `NEXT_PUBLIC_MAX_WHOIS_FOLLOW`: 최대 도메인 Whois 추적 (기본값: 0)
 - `NEXT_PUBLIC_MAX_IP_WHOIS_FOLLOW`: 최대 IP Whois 추적 (기본값: 5)
 
+### MOZ API
+- `MOZ_ACCESS_ID`: Moz API 액세스 ID (도메인 메트릭스에 필요)
+- `MOZ_SECRET_KEY`: Moz API 시크릿 키 (도메인 메트릭스에 필요)
+
 ### CACHE
 - `REDIS_HOST`: Redis 호스트 (비어있을 경우 캐시 비활성화)
 - `REDIS_PORT`: Redis 포트 (기본값: 6379)
@@ -68,6 +73,7 @@ pnpm dev
 - Next.js
 - Shadcn UI & Tailwind CSS
 - Whois Core Lib (@[whois-raw](https://www.npmjs.com/package/whois-raw))
+- RDAP 지원 (@[node-rdap](https://www.npmjs.com/package/node-rdap))
 
 ## 💪 TLD 지원
 👉 [TLD Whois 파서 라이브러리 소스 코드](./src/lib/whois/lib.ts)
