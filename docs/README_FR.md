@@ -1,81 +1,90 @@
 <div align="center">
 
-# 🧪 Next Whois
-😎 Outil de requête Whois léger et élégant
+<img src="/public/icons/icon-512x512.png" alt="Next Whois" width="64" height="64">
+
+# Next Whois
+
+Un outil de recherche WHOIS/RDAP rapide et moderne, construit avec Next.js.
 
 [English](/README.md) · [简体中文](/docs/README_CN.md) · [繁體中文](/docs/README_TW.md) · [Русский](/docs/README_RU.md) · [日本語](/docs/README_JP.md) · [Deutsch](/docs/README_DE.md) · [Français](/docs/README_FR.md) · [한국어](/docs/README_KR.md)
 
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/zmh-program/next-whois-ui)
-
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/zmh-program/next-whois-ui)
 
 </div>
 
-## 😎 Caractéristiques
-Pas besoin d'en dire plus, essayez-le ! 🥳
+![Banner](/public/banner.png)
 
-1. ✨ **Interface élégante**: Design moderne avec [Shadcn UI](https://ui.shadcn.com), pour votre confort.
-2. 📱 **Responsive**: Fonctionne bien sur Mobile✅ / Tablette✅ / Bureau✅, Support PWA.
-3. 🌈 **Multi-thèmes**: Support multi-thèmes (*Clair & Sombre*), détection du thème système.
-4. 🚀 **Requêtes flexibles**: Propulsé par Next.js, supporte le déploiement serverless et les requêtes rapides.
-5. 📚 **Historique**: Les enregistrements sont stockés localement, faciles à consulter.
-6. 📡 **API ouverte**: API simple pour les requêtes whois, facile à intégrer.
-7. 🌍 **Whois IPv4 & IPv6**: Support des requêtes whois IPv4, IPv6, Domaine, ASN, CIDR.
-8. 📦 **Capture des résultats**: Capturez les résultats whois, faciles à partager.
-9. 📡 **Mise en cache**: Mise en cache Whois basée sur Redis pour des requêtes plus rapides.
-10. 🌍 **Internationalisation**: Support multi-langues
-11. 🚀 **Support RDAP**: Support du protocole RDAP moderne avec repli automatique vers WHOIS
+## Fonctionnalites
 
-👉 [Contribuer](https://github.com/zmh-program/next-whois-ui/pulls)
+- **WHOIS & RDAP** - Recherche de domaines, IPv4, IPv6, ASN, CIDR avec priorite RDAP et repli sur WHOIS
+- **Images OG dynamiques** - Generation d'images Open Graph basee sur Satori via `/api/og`
+- **Interface responsive** - Shadcn UI + Tailwind CSS, compatible mobile, tablette et bureau. Support PWA.
+- **Theme sombre / clair** - Detection automatique du systeme avec bascule manuelle
+- **Historique & raccourcis** - Historique local avec recherche, filtrage et raccourcis clavier
+- **Codes de statut EPP** - Descriptions lisibles des statuts avec references ICANN
+- **Branding registraires & NS** - Detection automatique des icones des principaux registraires et fournisseurs de serveurs de noms
+- **Metriques de domaine** - Integration Moz DA/PA/Spam Score (optionnel)
+- **Cache Redis** - Mise en cache des resultats cote serveur avec en-tetes `Cache-Control`
+- **API ouverte** - `/api/lookup` pour l'acces programmatique, `/api/og` pour la generation d'images
+- **Internationalisation** - Anglais, chinois (simplifie/traditionnel), allemand, russe, japonais, francais, coreen
+- **Documentation API** - Page `/docs` integree avec exemples interactifs
 
-## Déploiement
-#### `1` 🚀 Plateformes (Recommandé)
+## Forks Communautaires
+
+Découvrez les excellents travaux de développeurs talentueux qui étendent ce projet :
+
+- [w.is](https://w.is) (by [HiFrey](https://x.com/@HiFrey))
+- [14.cx](https://14.cx) ([yisi.yun](https://yisi.yun), by [人皇](https://www.dalao.net/user-4842.htm))
+
+## Deploiement
+
+### Plateformes (Recommande)
+
 [Vercel](https://vercel.com/import/project?template=https://github.com/zmh-program/next-whois-ui) / [Netlify](https://app.netlify.com/start/deploy?repository=https://github.com/zmh-program/next-whois-ui) / [Zeabur](https://zeabur.com/templates/UHCCCT)
-#### `2` 🐳 Docker
+
+### Docker
+
 ```bash
 docker run -d -p 3000:3000 programzmh/next-whois-ui
 ```
 
-#### `3` 🔨 Code Source
+### Code source
+
 ```bash
 git clone https://github.com/zmh-program/next-whois-ui
 cd next-whois-ui
-
-npm install -g pnpm
 pnpm install
 pnpm dev
 ```
 
-## 📏 Variables d'environnement
+## Variables d'environnement
 
-### SEO
-- `NEXT_PUBLIC_SITE_TITLE`: Titre du site
-- `NEXT_PUBLIC_SITE_DESCRIPTION`: Description du site
-- `NEXT_PUBLIC_SITE_KEYWORDS`: Mots-clés du site
+| Variable | Description | Valeur par defaut |
+|----------|-------------|-------------------|
+| `NEXT_PUBLIC_SITE_TITLE` | Titre du site | Next Whois |
+| `NEXT_PUBLIC_SITE_DESCRIPTION` | Description du site | — |
+| `NEXT_PUBLIC_SITE_KEYWORDS` | Mots-cles du site | — |
+| `NEXT_PUBLIC_HISTORY_LIMIT` | Nb max d'entrees d'historique (-1 = illimite) | -1 |
+| `NEXT_PUBLIC_MAX_WHOIS_FOLLOW` | Profondeur max de suivi WHOIS des domaines | 0 |
+| `MOZ_ACCESS_ID` | Moz API Access ID | — |
+| `MOZ_SECRET_KEY` | Moz API Secret Key | — |
+| `REDIS_HOST` | Hote Redis (vide = cache desactive) | — |
+| `REDIS_PORT` | Port Redis | 6379 |
+| `REDIS_PASSWORD` | Mot de passe Redis | — |
+| `REDIS_DB` | Index de la base de donnees Redis | 0 |
+| `REDIS_CACHE_TTL` | TTL du cache en secondes | 3600 |
 
-### WHOIS
-- `NEXT_PUBLIC_HISTORY_LIMIT`: Limite d'historique (Par défaut: -1)
-- `NEXT_PUBLIC_MAX_WHOIS_FOLLOW`: Suivi max des domaines Whois (Par défaut: 0)
-- `NEXT_PUBLIC_MAX_IP_WHOIS_FOLLOW`: Suivi max des IP Whois (Par défaut: 5)
+## API
 
-### MOZ API
-- `MOZ_ACCESS_ID`: ID d'accès Moz API (Requis pour les métriques de domaine)
-- `MOZ_SECRET_KEY`: Clé secrète Moz API (Requise pour les métriques de domaine)
+Consultez la page de [documentation API](https://who.zmh.me/docs) integree, ou :
 
-### CACHE
-- `REDIS_HOST`: Hôte Redis (CACHE DÉSACTIVÉ SI VIDE)
-- `REDIS_PORT`: Port Redis (Par défaut: 6379)
-- `REDIS_PASSWORD`: Mot de passe Redis (OPTIONNEL)
-- `REDIS_DB`: Base de données Redis (Par défaut: 0)
-- `REDIS_CACHE_TTL`: TTL du cache Redis en secondes (Par défaut: 3600)
+**`GET /api/lookup?query=google.com`** — Recherche WHOIS/RDAP
 
-## 🧠 Stack Technique
-- Next.js
-- Shadcn UI & Tailwind CSS
-- Whois Core Lib (@[whois-raw](https://www.npmjs.com/package/whois-raw))
-- Support RDAP (@[node-rdap](https://www.npmjs.com/package/node-rdap))
+**`GET /api/og?query=google.com`** — Generation d'image OG dynamique
 
-## 💪 Support TLD
-👉 [Code source de la bibliothèque d'analyse Whois TLD](../src/lib/whois/lib.ts)
+## Stack technique
 
-❤ CONSEIL: L'analyseur Whois pour certains TLD peut ne pas être actuellement compatible, merci de contribuer via une [Pull Request](https://github.com/zmh-program/next-whois-ui/pulls) pour faire en sorte que ce projet supporte plus de TLD ! 
+- Next.js 14 (Pages Router, Edge Runtime for OG)
+- [Whoiser](https://www.npmjs.com/package/whoiser) + RDAP client
+- Satori (via `next/og`) for image generation

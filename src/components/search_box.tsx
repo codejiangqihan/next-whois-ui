@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import {
   RiLoader2Line,
   RiSendPlaneLine,
-  RiSearchLine,
   RiHistoryLine,
   RiLinkM,
 } from "@remixicon/react";
@@ -15,48 +14,116 @@ import { Badge } from "@/components/ui/badge";
 import { useTranslation } from "@/lib/i18n";
 
 const commonDomains = [
-  // Generic TLDs
   ".com",
   ".net",
   ".org",
   ".info",
   ".biz",
-  // Tech TLDs
+  ".mobi",
+  ".pro",
+  ".tel",
   ".io",
   ".dev",
   ".app",
   ".tech",
   ".ai",
   ".cloud",
-  // Country TLDs
+  ".code",
+  ".sh",
+  ".so",
+  ".run",
+  ".api",
+  ".bot",
   ".cn",
   ".us",
   ".uk",
   ".jp",
   ".de",
-  // Personal TLDs
+  ".fr",
+  ".ru",
+  ".kr",
+  ".in",
+  ".au",
+  ".ca",
+  ".br",
+  ".it",
+  ".es",
+  ".nl",
+  ".se",
+  ".no",
+  ".fi",
+  ".pl",
+  ".cz",
+  ".at",
+  ".ch",
+  ".be",
+  ".dk",
+  ".pt",
+  ".ie",
+  ".nz",
+  ".sg",
+  ".hk",
+  ".tw",
+  ".th",
+  ".my",
+  ".id",
+  ".ph",
+  ".vn",
+  ".tr",
+  ".za",
+  ".mx",
+  ".ar",
+  ".cl",
+  ".co.uk",
+  ".co.jp",
+  ".com.au",
+  ".com.br",
+  ".com.cn",
+  ".co.kr",
+  ".co.in",
   ".me",
   ".name",
   ".blog",
-  // Business TLDs
+  ".live",
+  ".life",
+  ".world",
+  ".today",
   ".co",
   ".inc",
   ".ltd",
   ".company",
-  // Other Popular TLDs
+  ".group",
+  ".agency",
+  ".studio",
   ".xyz",
   ".online",
   ".site",
-  ".web",
+  ".top",
+  ".vip",
+  ".cc",
+  ".tv",
+  ".gg",
+  ".fun",
+  ".space",
+  ".link",
+  ".click",
+  ".one",
+  ".moe",
+  ".edu",
+  ".gov",
+  ".mil",
+  ".museum",
+  ".int",
 ];
 
-// Regex patterns for different query types
 const queryPatterns = {
   ipv4: /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){0,3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)?$/,
-  ipv6: /^(?:[A-F0-9]{1,4}:){0,7}[A-F0-9]{1,4}$/i,
+  ipv6: /^(?:[A-F0-9]{0,4}:){1,7}[A-F0-9]{0,4}$/i,
   asn: /^AS\d*$/i,
-  cidr: /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}\/\d{1,2}$/,
-  domain: /^[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z]{2,})*$/,
+  ipv4Cidr: /^(?:[0-9]{1,3}\.){1,3}[0-9]{0,3}\/\d{0,2}$/,
+  ipv6Cidr: /^(?:[A-F0-9]{0,4}:){1,7}[A-F0-9]{0,4}\/\d{0,3}$/i,
+  domain:
+    /^[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9]{1,})*$/,
 };
 
 interface SearchBoxProps {
@@ -86,7 +153,6 @@ export function SearchBox({
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [selectedGroup, setSelectedGroup] = useState(-1);
-  const [predictedType, setPredictedType] = useState<string>("domain");
   const [isEnterPressed, setIsEnterPressed] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const suggestionsRef = useRef<HTMLDivElement>(null);
@@ -119,15 +185,18 @@ export function SearchBox({
   const predictQueryType = (value: string): string => {
     if (!value) return "domain";
 
-    // Early type prediction based on input patterns
-    if (value.match(/^\d{1,3}\./)) return "ipv4";
-    if (value.toLowerCase().startsWith("as")) return "asn";
+    if (value.toLowerCase().startsWith("as") && /^as\d*$/i.test(value))
+      return "asn";
+    if (value.includes(":") && value.includes("/")) return "cidr";
+    if (value.includes("/") && /^\d/.test(value)) return "cidr";
     if (value.includes(":")) return "ipv6";
-    if (value.includes("/")) return "cidr";
+    if (/^\d{1,3}\./.test(value)) return "ipv4";
 
-    // Check against regex patterns
     for (const [type, pattern] of Object.entries(queryPatterns)) {
-      if (pattern.test(value)) return type;
+      if (pattern.test(value)) {
+        if (type === "ipv4Cidr" || type === "ipv6Cidr") return "cidr";
+        return type;
+      }
     }
 
     return "domain";
@@ -186,14 +255,32 @@ export function SearchBox({
     const parts = value.split(".");
 
     if (parts.length === 1 || (parts.length === 2 && parts[1] === "")) {
-      // No dot or dot at the end
-      commonDomains.forEach((tld) => {
+      const topTlds = [
+        ".com",
+        ".net",
+        ".org",
+        ".io",
+        ".dev",
+        ".ai",
+        ".co",
+        ".xyz",
+      ];
+      topTlds.forEach((tld) => {
         suggestions.push(parts[0] + tld);
       });
     } else if (parts.length === 2 && parts[1]) {
-      // After dot with some input
       commonDomains
         .filter((tld) => tld.substring(1).startsWith(parts[1]))
+        .forEach((tld) => {
+          suggestions.push(`${parts[0]}${tld}`);
+        });
+    } else if (parts.length === 3 && parts[2]) {
+      commonDomains
+        .filter(
+          (tld) =>
+            tld.startsWith(`.${parts[1]}.`) &&
+            tld.substring(1).startsWith(`${parts[1]}.${parts[2]}`),
+        )
         .forEach((tld) => {
           suggestions.push(`${parts[0]}${tld}`);
         });
@@ -206,7 +293,6 @@ export function SearchBox({
     if (!value) return [];
 
     const type = predictQueryType(value);
-    setPredictedType(type);
 
     const suggestionGroups: SuggestionGroup[] = [];
 
@@ -235,27 +321,57 @@ export function SearchBox({
       case "ipv6":
         typeSuggestions = generateIPv6Suggestions(value);
         break;
-      case "asn":
-        if (value.toLowerCase() === "as") {
-          typeSuggestions = [
-            "AS2914", // NTT
-            "AS7018", // AT&T
-            "AS3356", // Level3
-            "AS4134", // Chinanet
-            "AS9808", // China Mobile
-            "AS174", // Cogent
-            "AS1299", // Telia
-            "AS3257", // GTT
-            "AS7922", // Comcast
-            "AS209", // CenturyLink
-            "AS6939", // Hurricane Electric
-            "AS16509", // Amazon
-            "AS15169", // Google
-            "AS8075", // Microsoft
-            "AS13335", // Cloudflare
-          ];
+      case "cidr": {
+        const base = value.split("/")[0];
+        const prefix = value.includes("/") ? value.split("/")[1] : "";
+        if (base.includes(":")) {
+          const commonPrefixes = ["32", "48", "64", "128"];
+          typeSuggestions = commonPrefixes
+            .filter((p) => p.startsWith(prefix))
+            .map((p) => `${base}/${p}`);
+        } else {
+          const commonPrefixes = ["8", "16", "24", "32"];
+          typeSuggestions = commonPrefixes
+            .filter((p) => p.startsWith(prefix))
+            .map((p) => `${base}/${p}`);
         }
         break;
+      }
+      case "asn": {
+        const wellKnownASNs = [
+          "AS13335", // Cloudflare
+          "AS15169", // Google
+          "AS8075", // Microsoft
+          "AS16509", // Amazon
+          "AS14618", // Amazon
+          "AS20940", // Akamai
+          "AS54113", // Fastly
+          "AS13414", // Twitter
+          "AS32934", // Facebook
+          "AS2906", // Netflix
+          "AS6939", // Hurricane Electric
+          "AS174", // Cogent
+          "AS2914", // NTT
+          "AS3356", // Level3
+          "AS1299", // Telia
+          "AS3257", // GTT
+          "AS7018", // AT&T
+          "AS7922", // Comcast
+          "AS209", // CenturyLink
+          "AS4134", // Chinanet
+          "AS4837", // China Unicom
+          "AS9808", // China Mobile
+          "AS4766", // Korea Telecom
+          "AS2516", // KDDI
+          "AS9318", // SK Broadband
+        ];
+        const prefix = value.toUpperCase();
+        typeSuggestions = wellKnownASNs.filter((asn) => asn.startsWith(prefix));
+        if (typeSuggestions.length === 0 && /^AS\d+$/i.test(value)) {
+          typeSuggestions = [value.toUpperCase()];
+        }
+        break;
+      }
     }
 
     suggestionGroups.push({
@@ -279,10 +395,6 @@ export function SearchBox({
     if (e.key === "ArrowDown" || e.key === "ArrowUp") {
       e.preventDefault();
 
-      let totalItems = suggestions.reduce(
-        (sum, group) => sum + group.items.length,
-        0,
-      );
       let currentIndex = selectedIndex;
       let currentGroup = selectedGroup;
 

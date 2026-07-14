@@ -98,25 +98,3 @@ export function removeHistory(query: string) {
     console.warn("Failed to remove history from localStorage:", error);
   }
 }
-
-export function searchHistory(searchTerm: string): HistoryItem[] {
-  const history = listHistory();
-  if (!searchTerm) return history;
-
-  const term = searchTerm.toLowerCase();
-  return history.filter(
-    (item) =>
-      item.query.toLowerCase().includes(term) ||
-      item.queryType.toLowerCase().includes(term),
-  );
-}
-
-export function clearHistory() {
-  if (!isLocalStorageAvailable()) return;
-
-  try {
-    localStorage.setItem("history", "[]");
-  } catch (error) {
-    console.warn("Failed to clear history from localStorage:", error);
-  }
-}

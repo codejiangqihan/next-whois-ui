@@ -1,187 +1,90 @@
 <div align="center">
 
-# 🧪 Next Whois
+<img src="/public/icons/icon-512x512.png" alt="Next Whois" width="64" height="64">
 
-😎 轻量级且美观的 Whois 查询工具
+# Next Whois
+
+快速、现代的 WHOIS/RDAP 查询工具，基于 Next.js 构建。
 
 [English](/README.md) · [简体中文](/docs/README_CN.md) · [繁體中文](/docs/README_TW.md) · [Русский](/docs/README_RU.md) · [日本語](/docs/README_JP.md) · [Deutsch](/docs/README_DE.md) · [Français](/docs/README_FR.md) · [한국어](/docs/README_KR.md)
 
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/zmh-program/next-whois-ui)
-
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/zmh-program/next-whois-ui)
 
 </div>
 
-## 😎 特性
+![Banner](/public/banner.png)
 
-无需多言，直接试试吧！🥳
+## 特性
 
-1. ✨ **美观界面**：采用现代简约设计的 [Shadcn UI](https://ui.shadcn.com) 风格。
-2. 📱 **响应式设计**：适配手机端✅ / Pad 端✅ / 桌面端✅，并支持 PWA 应用。
-3. 🌈 **多主题支持**：支持亮/暗色切换，自动检测系统主题。
-4. 🚀 **灵活查询**：基于 Next.js，支持无服务器部署，更快查询速度。
-5. 📚 **历史记录**：历史记录存储在本地，方便查看和查询历史。
-6. 📡 **开放接口**：提供简单的 whois 查询 API，易于与其他服务集成。
-7. 🌍 **强大支持**：支持 IPv4、IPv6、域名、ASN、CIDR 的 Whois 查询。
-8. 📦 **结果分享**：支持获取 Whois 查询结果，方便分享和保存。
-9. 📡 **结果缓存**：支持基于 Redis 的 Whois 缓存，提升查询速度。
-10. 🌍 **国际化**：支持多语言
-11. 🚀 **RDAP 支持**：支持现代 RDAP 协议，自动回退到 WHOIS
+- **WHOIS & RDAP** - 支持域名、IPv4、IPv6、ASN、CIDR 查询，优先使用 RDAP，自动回退到 WHOIS
+- **动态 OG 图片** - 基于 Satori 的 Open Graph 图片生成，通过 `/api/og` 访问
+- **响应式界面** - Shadcn UI + Tailwind CSS，适配手机、平板和桌面端，支持 PWA
+- **深色 / 浅色主题** - 自动检测系统主题，支持手动切换
+- **历史记录与快捷键** - 本地历史记录，支持搜索、筛选和键盘快捷键
+- **EPP 状态码** - 可读的状态描述，附带 ICANN 参考链接
+- **注册商与 NS 品牌识别** - 自动识别主要注册商和域名服务器提供商的图标
+- **域名指标** - 可选集成 Moz DA/PA/Spam Score
+- **Redis 缓存** - 服务端结果缓存，支持 `Cache-Control` 响应头
+- **开放 API** - `/api/lookup` 提供编程访问，`/api/og` 生成动态图片
+- **国际化** - 支持英语、简体中文、繁体中文、德语、俄语、日语、法语、韩语
+- **API 文档** - 内置 `/docs` 页面，提供交互式示例
 
-👉 [贡献代码](https://github.com/zmh-program/next-whois-ui/pulls)
+## 社区二开
+
+这些优秀开发者基于本项目做出了很棒的二次开发：
+
+- [w.is](https://w.is) (by [HiFrey](https://x.com/@HiFrey))
+- [yisi.yun](https://yisi.yun) ([14.cx](https://14.cx), by [人皇](https://www.dalao.net/user-4842.htm))
 
 ## 部署
 
-#### `1` 🚀 云平台部署（推荐）
+### 云平台（推荐）
 
 [Vercel](https://vercel.com/import/project?template=https://github.com/zmh-program/next-whois-ui) / [Netlify](https://app.netlify.com/start/deploy?repository=https://github.com/zmh-program/next-whois-ui) / [Zeabur](https://zeabur.com/templates/UHCCCT)
 
-#### `2` 🐳 Docker 部署
+### Docker
 
 ```bash
 docker run -d -p 3000:3000 programzmh/next-whois-ui
 ```
 
-#### `3` 🔨 源码部署
+### 源码部署
 
 ```bash
 git clone https://github.com/zmh-program/next-whois-ui
 cd next-whois-ui
-
-npm install -g pnpm
 pnpm install
 pnpm dev
 ```
 
-## 📏 环境变量
+## 环境变量
 
-### SEO
+| 变量 | 描述 | 默认值 |
+|------|------|--------|
+| `NEXT_PUBLIC_SITE_TITLE` | 站点标题 | Next Whois |
+| `NEXT_PUBLIC_SITE_DESCRIPTION` | 站点描述 | — |
+| `NEXT_PUBLIC_SITE_KEYWORDS` | 站点关键词 | — |
+| `NEXT_PUBLIC_HISTORY_LIMIT` | 最大历史记录数（-1 = 无限制） | -1 |
+| `NEXT_PUBLIC_MAX_WHOIS_FOLLOW` | 最大域名 WHOIS 跟随深度 | 0 |
+| `MOZ_ACCESS_ID` | Moz API Access ID | — |
+| `MOZ_SECRET_KEY` | Moz API Secret Key | — |
+| `REDIS_HOST` | Redis 主机（留空则禁用缓存） | — |
+| `REDIS_PORT` | Redis 端口 | 6379 |
+| `REDIS_PASSWORD` | Redis 密码 | — |
+| `REDIS_DB` | Redis 数据库索引 | 0 |
+| `REDIS_CACHE_TTL` | 缓存 TTL（秒） | 3600 |
 
-- `NEXT_PUBLIC_SITE_TITLE`: 站点标题
-- `NEXT_PUBLIC_SITE_DESCRIPTION`: 站点描述
-- `NEXT_PUBLIC_SITE_KEYWORDS`: 站点关键词
+## API
 
-### WHOIS
+查看内置的 [API 文档](https://who.zmh.me/docs) 页面，或：
 
-- `NEXT_PUBLIC_HISTORY_LIMIT`: 历史记录限制（默认值：-1）
-- `NEXT_PUBLIC_MAX_WHOIS_FOLLOW`: 最大域名 Whois 跟随数（默认值：0）
-- `NEXT_PUBLIC_MAX_IP_WHOIS_FOLLOW`: 最大 IP Whois 跟随数（默认值：5）
+**`GET /api/lookup?query=google.com`** — WHOIS/RDAP 查询
 
-### MOZ API
+**`GET /api/og?query=google.com`** — 动态 OG 图片生成
 
-- `MOZ_ACCESS_ID`: Moz API 访问 ID（获取域名指标所需）
-- `MOZ_SECRET_KEY`: Moz API 密钥（获取域名指标所需）
+## 技术栈
 
-### 缓存
-
-- `REDIS_HOST`: Redis 主机（如果为空则禁用缓存）
-- `REDIS_PORT`: Redis 端口（默认值：6379）
-- `REDIS_PASSWORD`: Redis 密码（可选）
-- `REDIS_DB`: Redis 数据库（默认值：0）
-- `REDIS_CACHE_TTL`: Redis 缓存 TTL 秒数（默认值：3600）
-
-## 📝 API 文档
-
-`GET` `/api/lookup?query=google.com`
-
-<details>
-<summary><strong>响应</strong> OK (200)</summary>
-
-```json
-{
-  "time": 1.547,
-  "status": true,
-  "cached": false,
-  "source": "rdap",
-  "result": {
-    "domain": "GOOGLE.COM",
-    "registrar": "MarkMonitor Inc.",
-    "registrarURL": "http://www.markmonitor.com",
-    "ianaId": "292",
-    "whoisServer": "whois.markmonitor.com",
-    "updatedDate": "2019-09-09T15:39:04.000Z",
-    "creationDate": "1997-09-15T04:00:00.000Z",
-    "expirationDate": "2028-09-14T04:00:00.000Z",
-    "status": [
-      {
-        "status": "clientDeleteProhibited",
-        "url": "https://icann.org/epp#clientDeleteProhibited"
-      },
-      {
-        "status": "clientTransferProhibited",
-        "url": "https://icann.org/epp#clientTransferProhibited"
-      },
-      {
-        "status": "clientUpdateProhibited",
-        "url": "https://icann.org/epp#clientUpdateProhibited"
-      },
-      {
-        "status": "serverDeleteProhibited",
-        "url": "https://icann.org/epp#serverDeleteProhibited"
-      },
-      {
-        "status": "serverTransferProhibited",
-        "url": "https://icann.org/epp#serverTransferProhibited"
-      },
-      {
-        "status": "serverUpdateProhibited",
-        "url": "https://icann.org/epp#serverUpdateProhibited"
-      }
-    ],
-    "nameServers": [
-      "NS1.GOOGLE.COM",
-      "NS2.GOOGLE.COM",
-      "NS3.GOOGLE.COM",
-      "NS4.GOOGLE.COM"
-    ],
-    "registrantOrganization": "Unknown",
-    "registrantProvince": "Unknown",
-    "registrantCountry": "Unknown",
-    "registrantPhone": "+1 2086851750",
-    "registrantEmail": "Unknown",
-    "rawWhoisContent": "...",
-    "rawRdapContent": "..."
-  }
-}
-```
-
-</details>
-
-<details>
-<summary><strong>错误响应</strong> Internal Server Error (500)</summary>
-
-```json
-{
-  "time": 0.609,
-  "status": false,
-  "error": "No match for domain google.notfound (e.g. domain is not registered)"
-}
-```
-
-</details>
-
-<details>
-<summary><strong>错误响应</strong> Bad Request (400)</summary>
-
-```json
-{
-  "time": -1,
-  "status": false,
-  "error": "Query is required"
-}
-```
-
-</details>
-
-## 🧠 技术栈
-
-- Next.js
-- Shadcn UI & Tailwind CSS
-- Whois Core Lib (@[whois-raw](https://www.npmjs.com/package/whois-raw))
-- RDAP 支持 (@[node-rdap](https://www.npmjs.com/package/node-rdap))
-
-## 💪 TLDs 支持
-
-👉 [TLDs Whois 解析器库源码](../src/lib/whois/lib.ts)
-
-❤ 提示: 部分 TLDs 的 Whois 解析器可能暂不兼容，感谢您提交 [贡献](https://github.com/zmh-program/next-whois-ui/pulls) 以便支持更多 TLDs！
+- Next.js 14 (Pages Router, Edge Runtime for OG)
+- [Whoiser](https://www.npmjs.com/package/whoiser) + RDAP client
+- Satori (via `next/og`) for image generation
